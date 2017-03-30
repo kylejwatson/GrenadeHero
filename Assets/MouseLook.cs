@@ -3,14 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using System;
-using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 [Serializable]
 public class MouseLook : MonoBehaviour
 {
 	public GameObject cameraObj;
 	public Transform character;
-	public Transform camera;
+	public Transform cam;
 	public float XSensitivity = 2f;
 	public float YSensitivity = 2f;
 	public bool clampVerticalRotation = true;
@@ -28,9 +27,9 @@ public class MouseLook : MonoBehaviour
 	public void Start()
 	{
 		character = this.transform;
-		camera = cameraObj.transform;
+		cam = cameraObj.transform;
 		m_CharacterTargetRot = character.localRotation;
-		m_CameraTargetRot = camera.localRotation;
+		m_CameraTargetRot = cam.localRotation;
 	}
 
 	public void Update(){
@@ -53,13 +52,13 @@ public class MouseLook : MonoBehaviour
 		{
 			character.localRotation = Quaternion.Slerp (character.localRotation, m_CharacterTargetRot,
 				smoothTime * Time.deltaTime);
-			camera.localRotation = Quaternion.Slerp (camera.localRotation, m_CameraTargetRot,
+			cam.localRotation = Quaternion.Slerp (cam.localRotation, m_CameraTargetRot,
 				smoothTime * Time.deltaTime);
 		}
 		else
 		{
 			character.localRotation = m_CharacterTargetRot;
-			camera.localRotation = m_CameraTargetRot;
+			cam.localRotation = m_CameraTargetRot;
 		}
 
 		UpdateCursorLock();

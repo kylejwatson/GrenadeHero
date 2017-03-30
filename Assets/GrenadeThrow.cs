@@ -8,7 +8,7 @@ public class GrenadeThrow : MonoBehaviour {
 	[SerializeField]
 	float throwStrength;
 	[SerializeField]
-	GameObject camera;
+	GameObject cam;
 	int counter;
 	// Use this for initialization
 	void Start () {
@@ -22,15 +22,15 @@ public class GrenadeThrow : MonoBehaviour {
 		if (CrossPlatformInputManager.GetButton ("Fire1") && counter > 100) {
 			counter = 0;
 			GameObject newGrenade = Instantiate (Grenade);
-			newGrenade.transform.position = this.transform.position + camera.transform.forward;
-			newGrenade.GetComponent<Rigidbody> ().AddForce (camera.transform.forward*throwStrength);
-		}else if (CrossPlatformInputManager.GetButton ("Fire2") && counter > 100) {
+			newGrenade.transform.position = this.transform.position + cam.transform.forward;
+			newGrenade.GetComponent<Rigidbody> ().AddForce (cam.transform.forward*throwStrength);
+		}/*else if (CrossPlatformInputManager.GetButton ("Fire2") && counter > 100) {
 			counter = 0;
 
 			GameObject newGrenade = Instantiate (Grenade);
-			newGrenade.transform.position = this.transform.position + camera.transform.forward;
+			newGrenade.transform.position = this.transform.position + cam.transform.forward;
 			newGrenade.GetComponent<Rigidbody> ().velocity = this.GetComponent<Rigidbody> ().velocity;
-			newGrenade.GetComponent<Rigidbody> ().AddForce (camera.transform.forward*throwStrength/2);
-		}
+			newGrenade.GetComponent<Rigidbody> ().AddForce (cam.transform.forward*throwStrength/2);
+		}*/
 	}
 }

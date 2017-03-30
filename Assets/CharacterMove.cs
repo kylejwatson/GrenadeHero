@@ -7,36 +7,50 @@ public class CharacterMove : MonoBehaviour {
 	public float speed;
 	[SerializeField]
 	public float sprintMultiply;
+	[SerializeField]
+	public GameObject feet;
+	[SerializeField]
+	public float jumpSpeed;
+	[SerializeField]
+	public float lerpSpeed;
 	// Use this for initialization
 	void Start () {
 		
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
+		Vector3 vel = this.GetComponent<Rigidbody> ().velocity;
+		vel = new Vector3 (vel.x, 0, vel.z);
 		float sprint = 1.0f;
 		if (CrossPlatformInputManager.GetButton ("Sprint")) {
 			sprint = sprintMultiply;
 		}
         float totalSpeed = speed * sprint;
-		float h = CrossPlatformInputManager.GetAxis ("Horizontal") * totalSpeed;
-		float v = CrossPlatformInputManager.GetAxis ("Vertical") * totalSpeed;
-		if (h + v != 0) {
-			Vector3 vel = this.GetComponent<Rigidbody> ().velocity;
-            if (vel.x > totalSpeed)
-            {
-                h = vel.x;
-            }
-            if (vel.z > totalSpeed)
-            {
-                v = vel.z;
-            }
-            vel = new Vector3 (0, vel.y, 0) + (this.transform.forward * v) + (this.transform.right * h);
-            
-			this.GetComponent<Rigidbody> ().velocity = vel;
-		}
-		//this.GetComponent<Rigidbody> ().velocity.Scale (Vector3.one * 0.005f);
-		//this.GetComponent<CharacterController> ().Move (this.GetComponent<Rigidbody> ().velocity);
+		float h = CrossPlatformInputManager.GetAxisRaw ("Horizontal") * totalSpeed;
+		float v = CrossPlatformInputManager.GetAxisRaw ("Vertical") * totalSpeed;
+		Vector3 desiredMovement = (this.transform.forward * v) + (this.transform.right * h);
 
+		/*if (Mathf.Abs(desiredMovement.x) > Mathf.Abs(vel.x)) {
+			vel.x = desiredMovement.x;
+		}
+		if (Mathf.Abs(desiredMovement.z) > Mathf.Abs(vel.z)) {
+			vel.z = desiredMovement.z;
+		}*/
+		if (vel.sqrMagnitude < desiredMovement.sqrMagnitude) {
+			vel = Vector3.Lerp (vel, desiredMovement, lerpSpeed);
+		} else {
+			//vel = desiredMovement - vel;
+		}
+		vel += Vector3.up * this.GetComponent<Rigidbody> ().velocity.y; 
+		this.GetComponent<Rigidbody> ().velocity = vel;
+
+		if (isGrounded () && CrossPlatformInputManager.GetButtonDown ("Jump")) {
+			this.GetComponent<Rigidbody> ().AddForce (Vector3.up * jumpSpeed);
+		}
+	}
+
+	bool isGrounded(){
+		return feet.GetComponent<CharacterFeet> ().grounded;
 	}
 }

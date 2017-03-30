@@ -14,11 +14,11 @@ public class Grenade : MonoBehaviour {
 	public float life;
 	[SerializeField]
 	public float force;
-	private AudioSource audio;
+	private AudioSource sound;
 	private int counter;
 	// Use this for initialization
 	void Start () {
-		audio = this.GetComponent<AudioSource> ();
+		sound = this.GetComponent<AudioSource> ();
 		counter = 0;
 		explosion = Resources.Load ("Explosion") as GameObject;
 	}
@@ -32,11 +32,7 @@ public class Grenade : MonoBehaviour {
 				Rigidbody rb = hit.GetComponent<Rigidbody> ();
 				if (rb != null) {
 					rb.AddExplosionForce (force, this.transform.position, radius);
-					if (hit.tag == "Player") {
-						Debug.Log ("player");
-						hit.GetComponent<CharacterController> ().SimpleMove (Vector3.forward * 100);
-						//hit.GetComponent<CharacterController>().SimpleMove(Vector3.MoveTowards(this.transform.position, hit.transform.position, force));
-					}
+					//Debug.Log (rb.tag);
 				}
 			}
 			GameObject newExplosion = Instantiate (explosion);
@@ -46,6 +42,6 @@ public class Grenade : MonoBehaviour {
 	}
 
 	void OnCollisionEnter (Collision col){
-		audio.PlayOneShot (impact);
+		sound.PlayOneShot (impact);
 	}
 }
