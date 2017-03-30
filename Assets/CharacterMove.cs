@@ -18,11 +18,21 @@ public class CharacterMove : MonoBehaviour {
 		if (CrossPlatformInputManager.GetButton ("Sprint")) {
 			sprint = sprintMultiply;
 		}
-		float h = CrossPlatformInputManager.GetAxis ("Horizontal") * speed * sprint;
-		float v = CrossPlatformInputManager.GetAxis ("Vertical") * speed * sprint;
-		if (h + v != 0) { 
+        float totalSpeed = speed * sprint;
+		float h = CrossPlatformInputManager.GetAxis ("Horizontal") * totalSpeed;
+		float v = CrossPlatformInputManager.GetAxis ("Vertical") * totalSpeed;
+		if (h + v != 0) {
 			Vector3 vel = this.GetComponent<Rigidbody> ().velocity;
-			vel = new Vector3 (0, vel.y, 0) + (this.transform.forward * v) + (this.transform.right * h);
+            if (vel.x > totalSpeed)
+            {
+                h = vel.x;
+            }
+            if (vel.z > totalSpeed)
+            {
+                v = vel.z;
+            }
+            vel = new Vector3 (0, vel.y, 0) + (this.transform.forward * v) + (this.transform.right * h);
+            
 			this.GetComponent<Rigidbody> ().velocity = vel;
 		}
 		//this.GetComponent<Rigidbody> ().velocity.Scale (Vector3.one * 0.005f);
