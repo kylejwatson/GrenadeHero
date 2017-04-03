@@ -1,12 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\CharacterMove.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\GrenadeThrow.cs">
     <Files>
-      <File FileName="Assets\GrenadeThrow.cs" Line="34" Column="6" />
-      <File FileName="Assets\CharacterMove.cs" Line="43" Column="6" />
-      <File FileName="Assets\CharacterFeet.cs" Line="19" Column="24" />
-      <File FileName="Assets\Grenade.cs" Line="45" Column="8" />
-      <File FileName="Assets\MouseLook.cs" Line="5" Column="14" />
+      <File FileName="Assets\GrenadeThrow.cs" Line="40" Column="94" />
+      <File FileName="Assets\CharacterMove.cs" Line="45" Column="27" />
+      <File FileName="Assets\CharacterFeet.cs" Line="1" Column="1" />
+      <File FileName="Assets\Grenade.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
